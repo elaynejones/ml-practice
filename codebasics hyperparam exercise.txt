@@ -1,0 +1,77 @@
+from sklearn import datasets
+iris = datasets.load iris() 
+
+import pandas as pd
+df = pd.dataframe(iris.data, columns = iris.feature names)
+df['flower'] = iris.target
+df['flower'] = df['flower'].apply(lambda x: iris.target names[x])
+df[47:150]
+
+
+model paramas = {
+
+'svm': {
+model: svm.SVC(gamma='auto'), 
+params: {
+c: [1, 10,20], 
+kernel: [rbf, linear]}
+},
+
+
+random forest: {
+model: RandomForestClassifier(), 
+params: {
+n estimators: [2, 10, 20]
+}
+}, 
+
+
+logistic regression: {
+model: LogisticRegression(solver=liblinear, multi class = auto), 
+params: {
+c: [1,8,40]
+}
+}, 
+
+gaussian nb : {
+model: GaussianNB(), 
+params: {
+priors=None, 
+var_smoothing=1e-09
+}
+}, 
+
+'naive_bayes_gaussian': {
+        'model': GaussianNB(),
+        'params': {}
+    },
+    'naive_bayes_multinomial': {
+        'model': MultinomialNB(),
+        'params': {}
+    },
+    'decision_tree': {
+        'model': DecisionTreeClassifier(),
+        'params': {
+            'criterion': ['gini','entropy'],
+
+}
+}
+}
+
+
+
+scores = []
+
+from sklearn.model selection import GridSearchCV
+
+for model name, mp in model params.items():
+clf = GridSearchCV(mp[model], mp[params], cv=5, return train score = False)
+clf.fit(iris.data, iris.target)
+scores.append({
+model: model_name, 
+best score: clf.best score , 
+best params: clf.best params
+})
+
+df= pd.Dataframe(scores, columns =[model, best score, best params])
+df
